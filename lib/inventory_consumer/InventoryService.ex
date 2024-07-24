@@ -8,7 +8,6 @@ defmodule InventoryService do
     """
     {:ok, sqlResult} = Ecto.Adapters.SQL.query(Inventory.Repo, query, [customerOrderId])
     products = Enum.map(sqlResult.rows, fn row -> %{name: Enum.at(row, 0), quantity: Enum.at(row, 1)} end)
-    IO.inspect(products)
 
     products |> Enum.each(fn(product) ->
       update_inventory product
@@ -28,6 +27,10 @@ defmodule InventoryService do
       {:ok, stock} ->
         IO.puts("stock updated. " <> Integer.to_string(stock.quantity)
         <> " " <> stock.productname <> "s left in " <> stock.warehouse)
+
+        val = Jason.encode!(stock)
+        IO.inspect(val)
+        KafkaEx.produce("InventoryUpdated", 0, val)
       {:error, changes} ->
         IO.puts("error")
         IO.inspect changes
