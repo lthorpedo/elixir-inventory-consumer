@@ -6,7 +6,9 @@ defmodule InventoryConsumer.KafkaGenServer do
   end
 
   def init(arg) do
-    KafkaSub.mount()
+    if arg do
+      KafkaSub.mount()
+    end
 
     {:ok, arg}
   end

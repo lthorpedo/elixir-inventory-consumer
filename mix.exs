@@ -7,8 +7,7 @@ defmodule InventoryConsumer.MixProject do
       version: "0.1.0",
       elixir: "~> 1.17",
       start_permanent: Mix.env() == :prod,
-      deps: deps(),
-      aliases: aliases()
+      deps: deps()
     ]
   end
 
@@ -29,11 +28,6 @@ defmodule InventoryConsumer.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:kafka_ex, "~> 0.11"},
       {:jason, "~> 1.4"}
-    ]
-  end
-  defp aliases do
-    [
-      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seed.exs"],
     ]
   end
 end

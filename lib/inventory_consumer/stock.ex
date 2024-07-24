@@ -11,4 +11,10 @@ defmodule Stock do
   def show_stock do
     Stock |> Inventory.Repo.all
   end
+
+  def changeset(stk, params \\ %{}) do
+    stk
+    |> Ecto.Changeset.cast(params, [:productname, :quantity, :warehouse])
+    |> Ecto.Changeset.validate_required([:productname, :warehouse])
+  end
 end
